@@ -1,3 +1,4 @@
 .vs
 src\ElasticsearchRecipes\bin
 src\ElasticsearchRecipes\obj
+src\ElasticsearchRecipes\Data
