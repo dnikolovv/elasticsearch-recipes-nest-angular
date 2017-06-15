@@ -28,10 +28,12 @@
             {
                 using (StreamReader reader = new StreamReader(fs))
                 {
-                    // If you are using a very large file, you should avoid this method and read it in batches, because currently
-                    // the whole file is being allocated into memory
                     string rawJsonCollection = await reader.ReadToEndAsync();
-                    Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection)
+
+                    Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection, new JsonSerializerSettings
+                        {
+                            Error = HandleDeserializationError
+                        })
                         .Where(r => r.Name.Length > 0)
                         .ToArray();
 
@@ -51,16 +53,31 @@
                     }
 
                     // Then index the documents
-                    var result = await this.client.IndexManyAsync(mappedCollection);
+                    int batchSize = 10000;
+                    int totalBatches = mappedCollection.Length / batchSize;
 
-                    if (result.IsValid)
+                    for (int i = 0; i < totalBatches; i++)
                     {
-                        return true;
+                        var response = await this.client.IndexManyAsync(mappedCollection.Skip(i * batchSize).Take(batchSize));
+
+                        if (!response.IsValid)
+                        {
+                            return false;
+                        }
+
+                        System.Console.WriteLine($"Successfully indexed batch N{i + 1}");   
                     }
 
-                    return false;
+                    return true;
                 }
             }
+        }
+
+        // https://stackoverflow.com/questions/26107656/ignore-parsing-errors-during-json-net-data-parsing
+        private void HandleDeserializationError(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs errorArgs)
+        {
+            var currentError = errorArgs.ErrorContext.Error.Message;
+            errorArgs.ErrorContext.Handled = true;
         }
     }
 }
