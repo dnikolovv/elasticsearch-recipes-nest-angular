@@ -6,6 +6,7 @@
     using Nest;
     using Newtonsoft.Json;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class DataIndexer
@@ -21,7 +22,7 @@
         private readonly string contentRootPath;
         private readonly string index;
 
-        public async Task IndexDataFromFile(string fileName)
+        public async Task<bool> IndexRecipesFromFile(string fileName, bool deleteIndexIfExists)
         {
             using (FileStream fs = new FileStream(Path.Combine(contentRootPath, fileName), FileMode.Open))
             {
@@ -30,12 +31,34 @@
                     // If you are using a very large file, you should avoid this method and read it in batches, because currently
                     // the whole file is being allocated into memory
                     string rawJsonCollection = await reader.ReadToEndAsync();
-                    Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection);
+                    Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection)
+                        .Where(r => r.Name.Length > 0)
+                        .ToArray();
 
-                    // First, clear the data to avoid indexing the same documents multiple times
-                    await this.client.DeleteIndexAsync(this.index);
+                    // If the user specified to drop the index prior to indexing the documents
+                    if (this.client.IndexExists(this.index).Exists && deleteIndexIfExists)
+                    {
+                        await this.client.DeleteIndexAsync(this.index);
+                    }
+
+                    if (!this.client.IndexExists(this.index).Exists)
+                    {
+                        var indexDescriptor = new CreateIndexDescriptor(this.index)
+                                        .Mappings(mappings => mappings
+                                            .Map<Recipe>(m => m.AutoMap()));
+
+                        await this.client.CreateIndexAsync(this.index, i => indexDescriptor);
+                    }
+
                     // Then index the documents
-                    await this.client.IndexManyAsync(mappedCollection);
+                    var result = await this.client.IndexManyAsync(mappedCollection);
+
+                    if (result.IsValid)
+                    {
+                        return true;
+                    }
+
+                    return false;
                 }
             }
         }

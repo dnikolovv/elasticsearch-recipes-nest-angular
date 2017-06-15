@@ -19,5 +19,12 @@
             var result = await this.searchService.Search(query, page, pageSize);
             return Json(result);
         }
+
+        [HttpGet("autocomplete/{query}")]
+        public async Task<JsonResult> Autocomplete(string query)
+        {
+            var result = await this.searchService.Autocomplete(query);
+            return Json(result);
+        }
     }
 }

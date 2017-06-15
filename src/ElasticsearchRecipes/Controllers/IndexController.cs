@@ -14,11 +14,11 @@
         private readonly DataIndexer indexer;
 
         [HttpGet("file/{fileName}")]
-        public async Task<IActionResult> IndexDataFromFile(string fileName)
+        public async Task<IActionResult> IndexDataFromFile(string fileName, bool deleteIndexIfExists)
         {
             // TODO: Handle exceptions
-            await this.indexer.IndexDataFromFile(fileName);
-            return Ok();
+            var response = await this.indexer.IndexRecipesFromFile(fileName, deleteIndexIfExists);
+            return Ok(response);
         }
     }
 }

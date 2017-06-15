@@ -31,7 +31,7 @@
             // Get the connection settings from appsettings.json and inject them into ElasticConnectionSettings
             services.AddOptions();
             services.Configure<ElasticConnectionSettings>(Configuration.GetSection("ElasticConnectionSettings"));
-            // In our situation having a single ElasticClient is fine, so we will build just one instance of it
+            
             services.AddSingleton(typeof(ElasticClientProvider));
             services.AddTransient(typeof(DataIndexer));
 
