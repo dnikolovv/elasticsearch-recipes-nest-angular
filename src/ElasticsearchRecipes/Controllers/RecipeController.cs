@@ -20,6 +20,13 @@
             return Json(result);
         }
 
+        [HttpGet("morelikethis/{id}")]
+        public async Task<JsonResult> MoreLikeThis(string id, int page = 1, int pageSize = 10)
+        {
+            var result = await this.searchService.MoreLikeThis(id, page, pageSize);
+            return Json(result);
+        }
+
         [HttpGet("autocomplete/{query}")]
         public async Task<JsonResult> Autocomplete(string query)
         {

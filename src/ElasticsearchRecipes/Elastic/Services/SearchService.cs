@@ -15,18 +15,38 @@
         }
 
         private readonly ElasticClient client;
-        
+
         // If a word in the query is preceeded by a '-' sign, the results won't contain it
         public async Task<SearchResult<Recipe>> Search(string query, int page, int pageSize)
         {
             BoolQueryDescriptor<Recipe> queryDescriptor = this.BuildQueryDescriptor(query);
 
             var response = await this.client.SearchAsync<Recipe>(r => r
+                    .Query(q => q
+                        .Bool(b => queryDescriptor))
+                                        .From((page - 1) * pageSize)
+                                        .Size(pageSize));
+
+            // TODO: Should check if response is valid
+            return new SearchResult<Recipe>
+            {
+                Total = response.Total,
+                ElapsedMilliseconds = response.Took,
+                Page = page,
+                Results = response.Documents
+            };
+        }
+
+        public async Task<SearchResult<Recipe>> MoreLikeThis(string id, int page, int pageSize)
+        {
+            var response = await this.client.SearchAsync<Recipe>(s => s
                 .Query(q => q
-                    .Bool(b => queryDescriptor))
-                                    .From(page * pageSize)
-                                    .Size(pageSize));
-            // Should check if response is valid
+                    .MoreLikeThis(qd => qd
+                        .Like(l => l.Document(d => d.Id(id)))
+                        .Fields(fd => fd.Fields(r => r.Ingredients))))
+                        .From((page - 1) * pageSize)
+                        .Size(pageSize));
+
             return new SearchResult<Recipe>
             {
                 Total = response.Total,
@@ -54,7 +74,7 @@
             {
                 results.AddRange(option.Select(opt => opt.Text));
             }
-            
+
             return results;
         }
 

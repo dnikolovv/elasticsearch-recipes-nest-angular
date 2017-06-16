@@ -6,8 +6,9 @@
     [ElasticsearchType(Name = "recipe")]
     public class Recipe
     {
+        public string Id { get; set; }
+
         [Completion]
-        //[Keyword(NullValue = "Name not specified", Index = true)]
         public string Name { get; set; }
         [Text]
         public string Ingredients { get; set; }
