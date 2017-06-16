@@ -19,6 +19,32 @@
         // If a word in the query is preceeded by a '-' sign, the results won't contain it
         public async Task<SearchResult<Recipe>> Search(string query, int page, int pageSize)
         {
+            /*
+            Raw query:
+            {
+              "from": (page - 1) * pageSize,
+              "size": pageSize,
+              "query": {
+                "bool": {
+                  "must": [
+                    {
+                      "query_string": {
+                        "query": "words without a '-' in front"
+                      }
+                    }
+                  ],
+                  "must_not": [
+                    {
+                      "query_string": {
+                        "query": "words with a '-' in front"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+            */
+
             BoolQueryDescriptor<Recipe> queryDescriptor = this.BuildQueryDescriptor(query);
 
             var response = await this.client.SearchAsync<Recipe>(r => r
@@ -39,6 +65,28 @@
 
         public async Task<SearchResult<Recipe>> MoreLikeThis(string id, int page, int pageSize)
         {
+            /*
+            Raw query:
+            {
+              "from": (page - 1) * pageSize,
+              "size": pageSize,
+              "query": {
+                "more_like_this": {
+                  "fields": [
+                    "ingredients"
+                  ],
+                  "like": [
+                    {
+                      "_index": "recipes",
+                      "_type": "recipe",
+                      "_id": "id"
+                    }
+                  ]
+                }
+              }
+            }
+            */
+
             var response = await this.client.SearchAsync<Recipe>(s => s
                 .Query(q => q
                     .MoreLikeThis(qd => qd
@@ -47,6 +95,7 @@
                         .From((page - 1) * pageSize)
                         .Size(pageSize));
 
+            // TODO: Should check if response is valid
             return new SearchResult<Recipe>
             {
                 Total = response.Total,
@@ -58,6 +107,23 @@
 
         public async Task<List<string>> Autocomplete(string query)
         {
+            /*
+            Raw query:
+            {
+              "suggest": {
+                "recipe-name-completion": {
+                  "prefix": "query",
+                  "completion": {
+                    "field": "name",
+                    "fuzzy": {
+                      "fuzziness": "AUTO"
+                    }
+                  }
+                }
+              }
+            }
+            */
+
             var completionQuery = await this.client.SearchAsync<Recipe>(sr => sr
                 .Suggest(scd => scd
                     .Completion("recipe-name-completion", cs => cs
