@@ -13,10 +13,17 @@
 
         private readonly SearchService searchService;
 
-        [HttpGet("{query}")]
+        [HttpGet("search/{query}")]
         public async Task<JsonResult> Search(string query, int page = 1, int pageSize = 10)
         {
             var result = await this.searchService.Search(query, page, pageSize);
+            return Json(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<JsonResult> GetById(string id)
+        {
+            var result = await this.searchService.GetById(id);
             return Json(result);
         }
 

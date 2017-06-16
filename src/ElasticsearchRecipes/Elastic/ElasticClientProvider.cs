@@ -9,7 +9,7 @@
         {
             ConnectionSettings connectionSettings =
                 new ConnectionSettings(new System.Uri(settings.Value.ClusterUrl));
-
+            
             connectionSettings.EnableDebugMode();
 
             if (settings.Value.Index != null)

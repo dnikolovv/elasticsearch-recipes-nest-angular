@@ -45,7 +45,6 @@
             loggerFactory.AddDebug();
 
             app.UseMvc();
-            app.UseDeveloperExceptionPage();
         }
     }
 }

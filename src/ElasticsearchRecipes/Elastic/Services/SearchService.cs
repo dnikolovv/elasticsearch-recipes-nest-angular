@@ -105,6 +105,12 @@
             };
         }
 
+        public async Task<Recipe> GetById(string id)
+        {
+            var response = await this.client.GetAsync<Recipe>(id);
+            return response.Source;
+        }
+
         public async Task<List<string>> Autocomplete(string query)
         {
             /*
