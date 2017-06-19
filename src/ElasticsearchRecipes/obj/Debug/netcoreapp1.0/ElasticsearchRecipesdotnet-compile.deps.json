@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0/",
-    "signature": "91b2246f8103d6f3d57a3ebc8d319634b8c14565"
+    "signature": "89c8c34a76b9cf27c20f2374d54a7a43efd3aeff"
   },
   "compilationOptions": {
     "defines": [
@@ -29,6 +29,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics": "1.1.2",
+          "Microsoft.AspNetCore.StaticFilesEx": "1.0.0.4",
           "NEST": "5.4.0"
         },
         "compile": {
@@ -552,6 +553,18 @@
         },
         "compile": {
           "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.StaticFilesEx/1.0.0.4": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.2",
+          "Microsoft.AspNetCore.Http.Extensions": "1.1.2",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.1.1",
+          "Microsoft.Extensions.Logging.Abstractions": "1.1.2",
+          "Microsoft.Extensions.WebEncoders": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.StaticFilesEx.dll": {}
         }
       },
       "Microsoft.AspNetCore.WebUtilities/1.1.2": {
@@ -2605,6 +2618,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics": "1.1.2",
+          "Microsoft.AspNetCore.StaticFilesEx": "1.0.0.4",
           "NEST": "5.4.0"
         },
         "runtime": {
@@ -3128,6 +3142,18 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.StaticFilesEx/1.0.0.4": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.2",
+          "Microsoft.AspNetCore.Http.Extensions": "1.1.2",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.1.1",
+          "Microsoft.Extensions.Logging.Abstractions": "1.1.2",
+          "Microsoft.Extensions.WebEncoders": "1.0.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.StaticFilesEx.dll": {}
         }
       },
       "Microsoft.AspNetCore.WebUtilities/1.1.2": {
@@ -5252,6 +5278,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-GrTVDsRR6j2WrrTuNsZkG1R8aV1UbsA8TKUD+MKVSpXIoEpQNryCT181Zu94CARowQwFQdW4Q1DwfO4FdAhXiQ=="
+    },
+    "Microsoft.AspNetCore.StaticFilesEx/1.0.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6GysSNg8QRq6XKDBBciUm3+GpYfc2NiFKW6voJwG/8gY1IrreV4Qe4GiOSsoQCa4qri7WXi5lpkLDq4vcqiUDw=="
     },
     "Microsoft.AspNetCore.WebUtilities/1.1.2": {
       "type": "package",
