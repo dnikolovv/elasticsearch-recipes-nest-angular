@@ -45,14 +45,18 @@
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Recipes}");
+                    template: "{*url}",
+                    defaults: new
+                    {
+                        Controller = "Home",
+                        Action = "Recipes"
+                    });
             });
-
-            app.UseStaticFiles();
         }
     }
 }
