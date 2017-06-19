@@ -1,4 +1,4 @@
-﻿namespace ElasticsearchRecipes.Controllers
+﻿namespace ElasticsearchRecipes.Controllers.Api
 {
     using Elastic;
     using Microsoft.AspNetCore.Mvc;
