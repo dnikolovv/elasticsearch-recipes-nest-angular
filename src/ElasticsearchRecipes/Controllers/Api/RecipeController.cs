@@ -1,6 +1,6 @@
 ﻿namespace ElasticsearchRecipes.Controllers.Api
 {
-    using Elastic.Services;
+    using Elastic;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 

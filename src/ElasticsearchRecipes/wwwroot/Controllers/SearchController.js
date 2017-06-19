@@ -1,6 +1,8 @@
 ﻿(function () {
-    app.controller('SearchController', ['$scope', 'searchData', function ($scope, searchData) {
-        $scope.var = 'Hi from angular!';
+    app.controller('SearchController', ['searchData', function (searchData) {
+
         console.log(searchData);
+        var vm = this;
+        vm.searchData = searchData;
     }])
 })();

@@ -11,12 +11,13 @@
             .state('recipes', {
                 url: '/recipes',
                 templateUrl: '/Views/Recipes.html',
-                redirectTo: 'recipes.search'
+                controller: 'RecipeController',
+                controllerAs: 'model'
             });
 
         $stateProvider
                 .state('recipes.search', {
-                    url: '/search/?query',
+                    url: '/search/:query',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
@@ -33,7 +34,7 @@
                             }
                         }]
                     },
-                    templateUrl: '/Views/Search.html',
+                    templateUrl: '/Views/SearchResult.html',
                     controller: 'SearchController',
                     controllerAs: 'model'
                 });

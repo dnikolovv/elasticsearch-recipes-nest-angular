@@ -1,4 +1,9 @@
 ﻿<div class="container text-center">
     <h1>Elasticsearch Recipes</h1>
+
+    <label>Enter your query</label>
+    <input ng-model="model.query" type="text" class="input" />
+    <a ui-sref="recipes.search({ query: model.query })" class="btn btn-default">Search</a>
+
     <div ui-view=""></div>
 </div>

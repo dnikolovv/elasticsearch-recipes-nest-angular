@@ -1,4 +1,4 @@
-﻿namespace ElasticsearchRecipes.Elastic.Services
+﻿namespace ElasticsearchRecipes.Elastic
 {
     using Models;
     using Nest;
