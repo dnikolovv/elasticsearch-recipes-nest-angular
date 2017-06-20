@@ -3,6 +3,9 @@
 
         console.log(searchData);
         var vm = this;
+
+        searchData.pageSize = 10;
+
         vm.searchData = searchData;
     }])
 })();

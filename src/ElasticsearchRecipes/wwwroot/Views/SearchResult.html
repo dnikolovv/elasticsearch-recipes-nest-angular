@@ -1,7 +1,37 @@
 ﻿<div>
     <div>
-        Took: {{ model.searchData.elapsedMilliseconds }}ms, Page: {{ model.searchData.page }}, Total: {{ model.searchData.total }}
+        Took: {{ model.searchData.elapsedMilliseconds }}ms, Page: {{ model.searchData.page }}, Results count: {{ model.searchData.total }}
     </div>
 
-    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Cook Time</th>
+                <th>Prep Time</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="recipe in model.searchData.results">
+            <td>{{ recipe.id }}</td>
+            <td>{{ recipe.name }}</td>
+            <td>{{ recipe.description }}</td>
+            <td>{{ recipe.cookTime }}</td>
+            <td>{{ recipe.prepTime }}</td>
+            <td>
+                <a href="{{ recipe.url }}">Go to recipe</a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="">asdf</a>
+
+    <ul uib-pagination
+        ng-model="model.searchData.page"
+        total-items="model.searchData.total"
+        items-per-page="model.searchData.pageSize"
+        boundary-links="true">
+    </ul>
 </div>
