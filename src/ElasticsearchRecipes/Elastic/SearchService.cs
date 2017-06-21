@@ -17,7 +17,7 @@
         private readonly ElasticClient client;
 
         /// <summary>
-        /// Searches elastic for recipes matching the given query. If a word in the query is preceeded by a '-' sign, the results won't contain it.
+        /// Searches elastic for recipes matching the given query. If a word in the query is preceeded by a '-' sign, the results won't contain it. Supports wildcard queries.
         /// </summary>
         /// <param name="query"></param>
         /// <param name="page"></param>

@@ -24,10 +24,6 @@
                             if ($stateParams.query) {
                                 var deferred = $q.defer();
 
-                                if (typeof $stateParams.page != "Number" || $stateParams.page <= 0) {
-                                    $stateParams.page = 1;
-                                }
-
                                 RecipeService.getRecipes($stateParams.query, $stateParams.page).then(function (response) {
                                     deferred.resolve(response.data);
                                 });
@@ -36,6 +32,30 @@
                             } else {
                                 return null;
                             }
+                        }]
+                    },
+                    templateUrl: '/Views/SearchResult.html',
+                    controller: 'SearchController',
+                    controllerAs: 'model'
+                });
+
+        $stateProvider
+                .state('recipes.morelikethis', {
+                    url: '/morelikethis/:id?page',
+                    resolve: {
+                        searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
+
+                            var deferred = $q.defer();
+
+                            if (typeof $stateParams.page != "Number" || $stateParams.page <= 0) {
+                                $stateParams.page = 1;
+                            }
+
+                            RecipeService.moreLikeThis($stateParams.id).then(function (response) {
+                                deferred.resolve(response.data);
+                            });
+
+                            return deferred.promise;
                         }]
                     },
                     templateUrl: '/Views/SearchResult.html',

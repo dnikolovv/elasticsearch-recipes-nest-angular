@@ -9,29 +9,26 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Cook Time</th>
+                <th>Ingredients</th>
                 <th>Prep Time</th>
                 <th>Link</th>
+                <th>More like this</th>
             </tr>
         </thead>
-        <tr ng-repeat="recipe in model.searchData.results">
+        <tr ng-repeat="recipe in model.searchData.results" md-highlight-text="asdf">
             <td>{{ recipe.id }}</td>
             <td>{{ recipe.name }}</td>
             <td>{{ recipe.description }}</td>
-            <td>{{ recipe.cookTime }}</td>
+            <td>{{ recipe.ingredients }}</td>
             <td>{{ recipe.prepTime }}</td>
             <td>
                 <a href="{{ recipe.url }}">Go to recipe</a>
             </td>
+            <td>
+                <a ui-sref="recipes.morelikethis({ id: recipe.id})">More like this</a>
+            </td>
         </tr>
     </table>
 
-    <a href="">asdf</a>
-
-    <ul uib-pagination
-        ng-model="model.searchData.page"
-        total-items="model.searchData.total"
-        items-per-page="model.searchData.pageSize"
-        boundary-links="true">
-    </ul>
+    <ul uib-pagination total-items="model.searchData.total" ng-model="model.searchData.page" max-size="10" boundary-link-numbers="true" role="menu" ng-change="model.switchPage()"></ul>
 </div>

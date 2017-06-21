@@ -28,6 +28,7 @@
             {
                 using (StreamReader reader = new StreamReader(fs))
                 {
+                    // Won't be efficient with large files
                     string rawJsonCollection = await reader.ReadToEndAsync();
 
                     Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection, new JsonSerializerSettings
@@ -51,6 +52,11 @@
 
                         await this.client.CreateIndexAsync(this.index, i => indexDescriptor);
                     }
+
+                    // Max out the result window so you can have pagination for >100 pages
+                    this.client.UpdateIndexSettings(this.index, ixs => ixs
+                         .IndexSettings(s => s
+                             .Setting("max_result_window", int.MaxValue)));
 
                     // Then index the documents
                     int batchSize = 10000; // magic

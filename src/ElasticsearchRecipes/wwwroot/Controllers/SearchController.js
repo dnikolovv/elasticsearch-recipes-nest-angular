@@ -1,11 +1,22 @@
 ﻿(function () {
-    app.controller('SearchController', ['searchData', function (searchData) {
+    app.controller('SearchController', ['$state', '$stateParams', 'searchData', function ($state, $stateParams, searchData) {
 
-        console.log(searchData);
         var vm = this;
 
-        searchData.pageSize = 10;
-
         vm.searchData = searchData;
+
+        vm.switchPage = function () {
+
+            var params = {};
+            // Horrible but works
+            if (searchData.id) { // If requesting moreLikeThis
+                params.id = searchData.id;
+            } else {
+                params.query = $stateParams.query;
+                params.page = vm.searchData.page;
+            }
+
+            $state.go('recipes.search', params);
+        };
     }])
 })();

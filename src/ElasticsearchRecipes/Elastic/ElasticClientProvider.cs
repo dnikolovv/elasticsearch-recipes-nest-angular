@@ -1,6 +1,7 @@
 ﻿namespace ElasticsearchRecipes.Elastic
 {
     using Microsoft.Extensions.Options;
+    using Models;
     using Nest;
 
     public class ElasticClientProvider
