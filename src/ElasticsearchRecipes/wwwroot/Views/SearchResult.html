@@ -25,7 +25,7 @@
                 <a href="{{ recipe.url }}">Go to recipe</a>
             </td>
             <td>
-                <a ui-sref="recipes.morelikethis({ id: recipe.id, pageSize: model.searchData.pageSize })">More like this</a>
+                <a ui-sref="recipes.morelikethis({ id: recipe.id, pageSize: model.searchData.pageSize, recipe: recipe.name })">More like this</a>
             </td>
         </tr>
     </table>

@@ -41,7 +41,7 @@
 
         $stateProvider
                 .state('recipes.morelikethis', {
-                    url: '/morelikethis/:id?page&pageSize',
+                    url: '/morelikethis/:id?page&pageSize&recipe',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
