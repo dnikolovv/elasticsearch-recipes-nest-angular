@@ -221,21 +221,18 @@
         {
             foreach (var term in terms)
             {
-                TermQuery queryToAdd = new TermQuery()
-                {
-                    Field = "ingredients"
-                };
+                QueryStringQuery queryToAdd = new QueryStringQuery();
 
                 // Terms that are marked with '-' in front musn't be present in the search results
                 if (!(term.StartsWith("-")))
                 {
-                    queryToAdd.Value = term;
+                    queryToAdd.Query = term;
                     mustClauses.Add(queryToAdd);
                 }
                 else if (term.StartsWith("-"))
                 {
                     // The term without the '-' in front
-                    queryToAdd.Value = term.Substring(1, term.Length - 1);
+                    queryToAdd.Query = term.Substring(1, term.Length - 1);
                     mustNotClauses.Add(queryToAdd);
                 }
             }

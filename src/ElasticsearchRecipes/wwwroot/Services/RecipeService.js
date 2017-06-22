@@ -17,14 +17,15 @@
                     }
                 })
             },
-            moreLikeThis: function (id, page) {
+            moreLikeThis: function (id, page, pageSize) {
 
                 var route = recipesEndpoint + '/morelikethis';
 
                 return $http.get(route, {
                     params: {
                         id: id,
-                        page: page
+                        page: page,
+                        pageSize: pageSize
                     }
                 })
             }

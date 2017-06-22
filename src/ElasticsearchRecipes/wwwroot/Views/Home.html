@@ -2,17 +2,17 @@
     <h1>Elasticsearch Recipes</h1>
 
     <p>
-        Supported queries: wildcard (exampl*), must_not (-example), must (example)
+        Supported queries: wildcard (exampl*/exa?ple), must_not (-example), must (example), match_phrase ("example"), must_not match_phrase (-"example")
     </p>
 
     <input ng-model="model.query" type="text" class="input" />
-    <a ui-sref="recipes.search({ query: model.query, pageSize: model.pageSize })" class="btn btn-default">Go</a>
+    <a ui-sref="recipes.search({ query: model.query, pageSize: model.pageSize, page: 1 })" class="btn btn-default">Go</a>
 
     <br />
 
     <label>Page size</label>
 
-    <select ng-model="model.pageSize">
+    <select ng-model="model.pageSize" ng-change="updatePageSize()">
         <option>10</option>
         <option>20</option>
         <option>50</option>

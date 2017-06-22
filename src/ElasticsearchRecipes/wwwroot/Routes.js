@@ -10,8 +10,8 @@
         $stateProvider
             .state('recipes', {
                 url: '/recipes',
-                templateUrl: '/Views/Recipes.html',
-                controller: 'RecipeController',
+                templateUrl: '/Views/Home.html',
+                controller: 'MainController',
                 controllerAs: 'model'
             });
 
@@ -41,7 +41,7 @@
 
         $stateProvider
                 .state('recipes.morelikethis', {
-                    url: '/morelikethis/:id?page',
+                    url: '/morelikethis/:id?page&pageSize',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
@@ -51,15 +51,15 @@
                                 $stateParams.page = 1;
                             }
 
-                            RecipeService.moreLikeThis($stateParams.id).then(function (response) {
+                            RecipeService.moreLikeThis($stateParams.id, $stateParams.page, $stateParams.pageSize).then(function (response) {
                                 deferred.resolve(response.data);
                             });
 
                             return deferred.promise;
                         }]
                     },
-                    templateUrl: '/Views/SearchResult.html',
-                    controller: 'SearchController',
+                    templateUrl: '/Views/MoreLikeThis.html',
+                    controller: 'MoreLikeThisController',
                     controllerAs: 'model'
                 });
 
