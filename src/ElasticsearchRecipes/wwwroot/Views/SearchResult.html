@@ -30,5 +30,5 @@
         </tr>
     </table>
 
-    <ul uib-pagination total-items="model.searchData.total" ng-model="model.searchData.page" max-size="10" boundary-link-numbers="true" role="menu" ng-change="model.switchPage()"></ul>
+    <ul uib-pagination total-items="model.searchData.total" items-per-page="model.searchData.pageSize" ng-model="model.searchData.page" max-size="10" boundary-link-numbers="true" role="menu" ng-change="model.switchPage()"></ul>
 </div>

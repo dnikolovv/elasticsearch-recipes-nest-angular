@@ -4,6 +4,7 @@
         var vm = this;
 
         vm.searchData = searchData;
+        console.log(searchData);
 
         vm.switchPage = function () {
 

@@ -17,14 +17,14 @@
 
         $stateProvider
                 .state('recipes.search', {
-                    url: '/search/:query?page',
+                    url: '/search/:query?page&pageSize',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
                             if ($stateParams.query) {
                                 var deferred = $q.defer();
 
-                                RecipeService.getRecipes($stateParams.query, $stateParams.page).then(function (response) {
+                                RecipeService.getRecipes($stateParams.query, $stateParams.page, $stateParams.pageSize).then(function (response) {
                                     deferred.resolve(response.data);
                                 });
 

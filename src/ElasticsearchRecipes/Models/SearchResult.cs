@@ -8,6 +8,8 @@
 
         public int Page { get; set; }
 
+        public int PageSize { get; set; }
+
         public IEnumerable<T> Results { get; set; }
 
         public long ElapsedMilliseconds { get; set; }

@@ -5,14 +5,15 @@
 
         var recipeService = {
 
-            getRecipes: function (query, page) {
+            getRecipes: function (query, page, pageSize) {
 
                 var route = recipesEndpoint + '/search';
 
                 return $http.get(route, {
                     params: {
                         query: query,
-                        page: page
+                        page: page,
+                        pageSize: pageSize
                     }
                 })
             },
