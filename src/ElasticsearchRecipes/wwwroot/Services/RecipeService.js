@@ -28,6 +28,18 @@
                         pageSize: pageSize
                     }
                 })
+            },
+            autocomplete: function (query) {
+
+                if (typeof query !== "undefined" && query.length > 0) {
+                    var route = recipesEndpoint + '/autocomplete';
+
+                    return $http.get(route, {
+                        params: {
+                            query: query
+                        }
+                    })
+                }
             }
         }
 

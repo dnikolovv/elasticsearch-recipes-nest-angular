@@ -5,8 +5,10 @@
         Supported queries: wildcard (exampl*/exa?ple), must_not (-example), must (example), match_phrase ("example"), must_not match_phrase (-"example")
     </p>
 
-    <input ng-model="model.query" type="text" class="input" />
-    <a ui-sref="recipes.search({ query: model.query, pageSize: model.pageSize, page: 1 })" class="btn btn-default">Go</a>
+    <form ng-submit="model.search()">
+        <autocomplete ng-model="model.query" data="model.completionSuggestions" on-type="model.autocomplete"></autocomplete>
+        <!--<a ui-sref="recipes.search({ query: model.query, pageSize: model.pageSize, page: 1 })" class="btn btn-default">Go</a>-->
+    </form>
 
     <br />
 

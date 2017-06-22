@@ -13,6 +13,12 @@
 
         private readonly DataIndexer indexer;
 
+        /// <summary>
+        /// The file must be present in the project Data directory
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="deleteIndexIfExists"></param>
+        /// <returns></returns>
         [HttpGet("file/{fileName}")]
         public async Task<IActionResult> IndexDataFromFile(string fileName, bool deleteIndexIfExists)
         {
