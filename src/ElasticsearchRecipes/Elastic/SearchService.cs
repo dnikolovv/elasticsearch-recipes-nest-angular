@@ -1,5 +1,6 @@
 ﻿namespace ElasticsearchRecipes.Elastic
 {
+    using Elasticsearch.Net;
     using Models;
     using Nest;
     using System.Collections.Generic;
@@ -145,7 +146,7 @@
             return response.Source;
         }
 
-        public async Task<List<string>> Autocomplete(string query)
+        public async Task<List<AutocompleteResult>> Autocomplete(string query)
         {
             #region RawQuery
             /*
@@ -176,11 +177,11 @@
 
             var matchingOptions = completionQuery.Suggest["recipe-name-completion"].Select(s => s.Options);
 
-            List<string> results = new List<string>();
+            List<AutocompleteResult> results = new List<AutocompleteResult>();
 
             foreach (var option in matchingOptions)
             {
-                results.AddRange(option.Select(opt => opt.Text));
+                results.AddRange(option.Select(opt => new AutocompleteResult() { Id = opt.Source.Id, Name = opt.Source.Name }));
             }
 
             return results;

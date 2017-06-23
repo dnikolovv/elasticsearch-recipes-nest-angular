@@ -16,6 +16,14 @@
             });
 
         $stateProvider
+            .state('recipes.details', {
+                url: '/:id',
+                templateUrl: '/Views/Details.html',
+                controller: 'DetailsController',
+                controllerAs: 'model'
+            });
+
+        $stateProvider
                 .state('recipes.search', {
                     url: '/search/:query?page&pageSize',
                     resolve: {
@@ -47,7 +55,7 @@
 
                             var deferred = $q.defer();
 
-                            if (typeof $stateParams.page != "Number" || $stateParams.page <= 0) {
+                            if (typeof $stateParams.page !== "Number" || $stateParams.page <= 0) {
                                 $stateParams.page = 1;
                             }
 

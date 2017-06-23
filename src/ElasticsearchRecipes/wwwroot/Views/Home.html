@@ -6,8 +6,10 @@
     </p>
 
     <form ng-submit="model.search()">
-        <autocomplete ng-model="model.query" data="model.completionSuggestions" on-type="model.autocomplete"></autocomplete>
-        <!--<a ui-sref="recipes.search({ query: model.query, pageSize: model.pageSize, page: 1 })" class="btn btn-default">Go</a>-->
+        <input type="text" ng-model="model.query" placeholder="Start typing..." uib-typeahead="recipe as recipe.name for recipe in model.completionSuggestions($viewValue)" 
+               typeahead-loading="loadingRecipes" class="form-control" typeahead-on-select="model.goToRecipe($item)" typeahead-wait-ms="100">
+        <i ng-show="loadingRecipes" class="glyphicon glyphicon-refresh"></i>
+        <button type="submit" class="btn btn-default">Go</button>
     </form>
 
     <br />

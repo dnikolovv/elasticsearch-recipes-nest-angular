@@ -3,17 +3,14 @@
         var vm = this;
         vm.query = $stateParams.query;
         vm.pageSize = $stateParams.pageSize;
-        vm.completionSuggestions = [];
 
-        vm.autocomplete = function () {
-            if (vm.query.length > 0) {
-                 RecipeService.autocomplete(vm.query).then(function (response) {
-                    console.log('Autocomplete response: ' + response);
-                    vm.completionSuggestions = response.data;
+        vm.completionSuggestions = function (query) {
+            if (query.length > 0) {
+                return RecipeService.autocomplete(query).then(function (response) {
+                    return response.data;
                 });
             }
         }
-
         vm.search = function () {
             var params = {
                 query: vm.query,
@@ -22,6 +19,10 @@
             };
 
             $state.go('recipes.search', params);
+        }
+
+        vm.goToRecipe = function (recipe) {
+            $state.go('recipes.details', { id: recipe.id });
         }
     }]);
 })();
