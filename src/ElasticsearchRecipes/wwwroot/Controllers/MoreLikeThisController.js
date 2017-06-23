@@ -3,14 +3,14 @@
 
         var vm = this;
         vm.searchData = searchData;
-        vm.currentRecipe = $stateParams.recipe;
+        vm.currentRecipeName = $stateParams.recipeName;
 
         vm.switchPage = function () {
 
             var params = {
                 id: $stateParams.id,
                 page: vm.searchData.page,
-                recipe: vm.currentRecipe,
+                recipe: vm.currentRecipeName,
                 pageSize: $stateParams.pageSize
             };
 

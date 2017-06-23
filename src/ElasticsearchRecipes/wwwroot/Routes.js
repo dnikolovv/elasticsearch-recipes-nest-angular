@@ -16,30 +16,18 @@
             });
 
         $stateProvider
-            .state('recipes.details', {
-                url: '/:id',
-                templateUrl: '/Views/Details.html',
-                controller: 'DetailsController',
-                controllerAs: 'model'
-            });
-
-        $stateProvider
                 .state('recipes.search', {
                     url: '/search/:query?page&pageSize',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
-                            if ($stateParams.query) {
-                                var deferred = $q.defer();
+                            var deferred = $q.defer();
 
-                                RecipeService.getRecipes($stateParams.query, $stateParams.page, $stateParams.pageSize).then(function (response) {
-                                    deferred.resolve(response.data);
-                                });
+                            RecipeService.getRecipes($stateParams.query, $stateParams.page, $stateParams.pageSize).then(function (response) {
+                                deferred.resolve(response.data);
+                            });
 
-                                return deferred.promise;
-                            } else {
-                                return null;
-                            }
+                            return deferred.promise;
                         }]
                     },
                     templateUrl: '/Views/SearchResult.html',
@@ -48,8 +36,28 @@
                 });
 
         $stateProvider
+            .state('recipes.details', {
+                url: '/:id',
+                resolve: {
+                    recipe: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
+
+                        var deferred = $q.defer();
+
+                        RecipeService.getById($stateParams.id).then(function (response) {
+                            deferred.resolve(response.data);
+                        });
+
+                        return deferred.promise;
+                    }]
+                },
+                templateUrl: '/Views/Details.html',
+                controller: 'DetailsController',
+                controllerAs: 'model'
+            });
+
+        $stateProvider
                 .state('recipes.morelikethis', {
-                    url: '/morelikethis/:id?page&pageSize&recipe',
+                    url: '/morelikethis/:id?page&pageSize&recipeName',
                     resolve: {
                         searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 

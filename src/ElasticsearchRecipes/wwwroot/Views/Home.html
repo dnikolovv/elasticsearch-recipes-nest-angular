@@ -1,27 +1,27 @@
 ﻿<div class="container text-center">
-    <h1>Elasticsearch Recipes</h1>
+    <a href="/"><h1>Elasticsearch Recipes</h1></a>
 
     <p>
         Supported queries: wildcard (exampl*/exa?ple), must_not (-example), must (example), match_phrase ("example"), must_not match_phrase (-"example")
     </p>
 
-    <form ng-submit="model.search()">
-        <input type="text" ng-model="model.query" placeholder="Start typing..." uib-typeahead="recipe as recipe.name for recipe in model.completionSuggestions($viewValue)" 
-               typeahead-loading="loadingRecipes" class="form-control" typeahead-on-select="model.goToRecipe($item)" typeahead-wait-ms="100">
+    <form class="form-inline" ng-submit="model.search()">
+        <span>Page size</span>
+
+        <select class="form-control" ng-model="model.pageSize" ng-change="model.search()">
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+
+        <input type="text" ng-model="model.query" placeholder="Start typing..." uib-typeahead="recipe.name as recipe.name for recipe in model.completionSuggestions($viewValue)" 
+               typeahead-loading="loadingRecipes" class="form-control" typeahead-on-select="model.goToSelectedItem($item)" typeahead-wait-ms="100">
         <i ng-show="loadingRecipes" class="glyphicon glyphicon-refresh"></i>
         <button type="submit" class="btn btn-default">Go</button>
     </form>
 
     <br />
-
-    <label>Page size</label>
-
-    <select ng-model="model.pageSize" ng-change="updatePageSize()">
-        <option>10</option>
-        <option>20</option>
-        <option>50</option>
-        <option>100</option>
-    </select>
 
     <div ui-view=""></div>
 </div>

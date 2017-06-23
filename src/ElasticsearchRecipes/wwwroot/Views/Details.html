@@ -1,1 +1,29 @@
-﻿<h1>I'm a details view</h1>
+﻿<div ng-if="model.recipe.imageUrl">
+    <img ng-src="model.recipe.imageUrl" />
+</div>
+
+<a ng-href="{{model.recipe.url}}"><h3 ng-bind="model.recipe.name"></h3></a>
+
+<div ng-if="model.recipe.description">
+    <h4>Description:</h4>
+    <p ng-bind="model.recipe.description"></p>
+</div>
+
+<div ng-if="model.recipe.ingredients">
+    <h4>Ingredients:</h4>
+    <p ng-bind="model.recipe.ingredients"></p>
+</div>
+
+<p>
+    <div ng-if="model.recipe.cookTime">
+        Cook time: {{ model.recipe.cookTime }},
+    </div>
+    <div ng-if="model.recipe.prepTime">
+        Prep time : {{ model.recipe.prepTime }},
+    </div>
+    <div ng-if="model.recipe.recipeYield">
+        Yield: {{ model.recipe.recipeYield }}
+    </div>
+</p>
+
+<a ui-sref="recipes.morelikethis({ id: model.recipe.id, recipeName: model.recipe.name })">More like this recipe</a>

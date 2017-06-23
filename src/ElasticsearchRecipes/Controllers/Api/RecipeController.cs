@@ -13,7 +13,7 @@
 
         private readonly SearchService searchService;
 
-        [HttpGet("search/{query?}")]
+        [HttpGet("search")]
         public async Task<JsonResult> Search([FromQuery]string query, int page = 1, int pageSize = 10)
         {
             var result = await this.searchService.Search(query, page, pageSize);
@@ -27,14 +27,14 @@
             return Json(result);
         }
 
-        [HttpGet("morelikethis/{id?}")]
+        [HttpGet("morelikethis")]
         public async Task<JsonResult> MoreLikeThis([FromQuery]string id, int page = 1, int pageSize = 10)
         {
             var result = await this.searchService.MoreLikeThis(id, page, pageSize);
             return Json(result);
         }
 
-        [HttpGet("autocomplete/{query?}")]
+        [HttpGet("autocomplete")]
         public async Task<JsonResult> Autocomplete([FromQuery]string query)
         {
             var result = await this.searchService.Autocomplete(query);
