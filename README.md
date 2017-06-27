@@ -1,7 +1,7 @@
 # elasticsearch-recipes-nest-angular
 The application is pretty simple, but extremely flexible in terms of searching data.
 
-![Application](https://lh6.googleusercontent.com/NBUnYg6_wfTDzVqgrab-NNp8EpJsUyEEqINFzBBbSU2n8oiQLoLWe3bVMSfyLtzr3sPo0sSORqd_KPM=w1920-h920-rw)
+![Application](http://i66.tinypic.com/4l4z7k)
 
 It supports a number of Elastic query types, among which *[query_string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html), [multi_match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html), [completion](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-completion.html), [more_like_this](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html)* and others.
 
@@ -20,5 +20,5 @@ You can substitute the asterisk with a "**?**" sign, which will indicate that El
 
 This spits out the result:
 
-![Result](https://lh4.googleusercontent.com/qEivmkQ0WMYV3Q9NLBIxrQ8tFCkdLBNRIMMfSXkYUnxf3uWq1RvXX7rF6Ulvk7mZWWvdMmYR7Hd5B84=w1920-h920-rw)
+![Result](http://i67.tinypic.com/zss2td.png)
 ...
