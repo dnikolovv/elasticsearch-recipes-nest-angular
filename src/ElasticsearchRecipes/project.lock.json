@@ -4676,15 +4676,15 @@
       ]
     },
     "Microsoft.NETCore.App/1.0.1": {
-      "sha512": "M3iH7u95LntTkJtI/DqN/96MRlb8Wa0SjnXldxHA4FjlvEqghOhwK087bDZAZaTN9C4YHckvaYH3ka9eYWZZZw==",
+      "sha512": "fvSgGAZe4rb7sdAM7Cz2Zqfy8bNx799k6c1X8vFrtm0cVrw/mqlbuwVKNHIaMmdXm02wY2q99sQDrPskpb74mA==",
       "type": "package",
       "path": "Microsoft.NETCore.App/1.0.1",
       "files": [
+        "Microsoft.NETCore.App.1.0.1.nupkg.sha512",
+        "Microsoft.NETCore.App.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
-        "lib/netcoreapp1.0/_._",
-        "microsoft.netcore.app.1.0.1.nupkg.sha512",
-        "microsoft.netcore.app.nuspec"
+        "lib/netcoreapp1.0/_._"
       ]
     },
     "Microsoft.NETCore.DotNetHost/1.0.1": {
@@ -4724,14 +4724,14 @@
       ]
     },
     "Microsoft.NETCore.Jit/1.0.4": {
-      "sha512": "IcHTGj+vTFcOu7/flwNg+CWIfTsxqHWgj08MKOtYwS5k0EuLvx6PrYsn7vHCV0SUTk1zbQ1l0EJj1UdxTMyx4w==",
+      "sha512": "J+r6jvGTExT0vz/wG3RSODBLzGgUvsc/93+it6u1TxLa/UvoiKDZiP0tTbQJuYaX6in8kMn4+BQMPJUxnFP3MA==",
       "type": "package",
       "path": "Microsoft.NETCore.Jit/1.0.4",
       "files": [
+        "Microsoft.NETCore.Jit.1.0.4.nupkg.sha512",
+        "Microsoft.NETCore.Jit.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
-        "microsoft.netcore.jit.1.0.4.nupkg.sha512",
-        "microsoft.netcore.jit.nuspec",
         "runtime.json"
       ]
     },
@@ -4749,14 +4749,14 @@
       ]
     },
     "Microsoft.NETCore.Runtime.CoreCLR/1.0.4": {
-      "sha512": "r4/aP7VYcJ+W/rJVFU+jAdjF4KrsHRDYQJ+p8weUP5n65yLzWXlQTVY6OsR560aV5EF7jc65dqsNXIryUCrEkQ==",
+      "sha512": "Nwygx5h3q8qGdrJh0pwlFjxYPhiiqZTKDrR5lrPspS4cR62uCvyCy3Nzeb8hkNuM6sGnQinzJ66fGSS5E6qsCA==",
       "type": "package",
       "path": "Microsoft.NETCore.Runtime.CoreCLR/1.0.4",
       "files": [
+        "Microsoft.NETCore.Runtime.CoreCLR.1.0.4.nupkg.sha512",
+        "Microsoft.NETCore.Runtime.CoreCLR.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
-        "microsoft.netcore.runtime.coreclr.1.0.4.nupkg.sha512",
-        "microsoft.netcore.runtime.coreclr.nuspec",
         "runtime.json"
       ]
     },

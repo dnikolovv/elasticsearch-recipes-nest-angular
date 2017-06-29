@@ -34,9 +34,7 @@
                     Recipe[] mappedCollection = JsonConvert.DeserializeObject<Recipe[]>(rawJsonCollection, new JsonSerializerSettings
                         {
                             Error = HandleDeserializationError
-                        })
-                        .Where(r => r.Name.Length > 0)
-                        .ToArray();
+                        });
 
                     // If the user specified to drop the index prior to indexing the documents
                     if (this.client.IndexExists(this.index).Exists && deleteIndexIfExists)
