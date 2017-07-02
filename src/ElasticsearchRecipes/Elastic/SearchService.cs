@@ -1,6 +1,5 @@
 ﻿namespace ElasticsearchRecipes.Elastic
 {
-    using Elasticsearch.Net;
     using Models;
     using Nest;
     using System.Collections.Generic;
@@ -28,6 +27,7 @@
         /// <returns></returns>
         public async Task<SearchResult<Recipe>> Search(string query, int page, int pageSize)
         {
+            // TODO: Raw query is not updated after the switch to QueryStringQuery!!
             #region RawQuery
             /* 
             Passed query: "chopped onions" -"dried beans" eggs -pepper
@@ -80,7 +80,7 @@
 
             var response = await this.client.SearchAsync<Recipe>(r => r
                     .Query(q => q
-                        .Bool(b => queryDescriptor))
+                        .Bool(b => queryDescriptor)) 
                                         .From((page - 1) * pageSize)
                                         .Size(pageSize));
 
@@ -195,10 +195,24 @@
 
             List<QueryContainer> mustClauses = new List<QueryContainer>();
             List<QueryContainer> mustNotClauses = new List<QueryContainer>();
-            // Traverse the terms and collect all must/must_not clauses
-            ExtractTermConditions(terms, mustClauses, mustNotClauses);
-            // Traverse the phrases and collect all must/must_not clauses
-            ExtractPhraseConditions(phrases, mustClauses, mustNotClauses);
+
+            // Traverse the query params and collect all must/must_not clauses
+            foreach (var param in terms.Concat(phrases))
+            {
+                QueryStringQuery queryToAdd = new QueryStringQuery();
+
+                if (param.StartsWith("-"))
+                {
+                    queryToAdd.Query = param.Substring(1, param.Length - 1);
+                    mustNotClauses.Add(queryToAdd);
+                }
+                else
+                {
+                    queryToAdd.Query = param;
+                    mustClauses.Add(queryToAdd);
+                }
+            }
+
             // Create the actual query descriptor
             BoolQueryDescriptor<Recipe> queryDescriptor = new BoolQueryDescriptor<Recipe>();
             // Assign to it the clauses that we collected while processing the query
@@ -236,52 +250,6 @@
             }
 
             return terms.ToString().Split();
-        }
-
-        private void ExtractTermConditions(string[] terms, List<QueryContainer> mustClauses, List<QueryContainer> mustNotClauses)
-        {
-            foreach (var term in terms)
-            {
-                QueryStringQuery queryToAdd = new QueryStringQuery();
-
-                // Terms that are marked with '-' in front musn't be present in the search results
-                if (!(term.StartsWith("-")))
-                {
-                    queryToAdd.Query = term;
-                    mustClauses.Add(queryToAdd);
-                }
-                else if (term.StartsWith("-"))
-                {
-                    // The term without the '-' in front
-                    queryToAdd.Query = term.Substring(1, term.Length - 1);
-                    mustNotClauses.Add(queryToAdd);
-                }
-            }
-        }
-
-        private void ExtractPhraseConditions(string[] phrases, List<QueryContainer> mustClauses, List<QueryContainer> mustNotClauses)
-        {
-            foreach (var phrase in phrases)
-            {
-                MultiMatchQuery queryToAdd = new MultiMatchQuery()
-                {
-                    Fields = new string[] { "name", "ingredients" },
-                    Type = TextQueryType.Phrase
-                };
-
-                // Phrases that are marked with '-' in front musn't be present in the search results
-                if (!(phrase.StartsWith("-")))
-                {
-                    queryToAdd.Query = phrase;
-                    mustClauses.Add(queryToAdd);
-                }
-                else
-                {
-                    // The phrase without the '-' in front
-                    queryToAdd.Query = phrase.Substring(1, phrase.Length - 1);
-                    mustNotClauses.Add(queryToAdd);
-                }
-            }
         }
     }
 }
