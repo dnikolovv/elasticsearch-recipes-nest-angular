@@ -45,11 +45,12 @@
             }
             */
             #endregion
+
             var response = await this.client.SearchAsync<Recipe>(r => r
                     .Query(q => q
-                        .Bool(bqd => bqd
-                            .Must(qsq => qsq
-                                .QueryString(qs => qs
+                        .Bool(queryDescriptor => queryDescriptor
+                            .Must(queryStringQuery => queryStringQuery
+                                .QueryString(queryString => queryString
                                     .Query(query))))) 
                                         .From((page - 1) * pageSize)
                                         .Size(pageSize));
@@ -137,7 +138,7 @@
             */
             #endregion
 
-            var completionQuery = await this.client.SearchAsync<Recipe>(sr => sr
+            var suggestionResponse = await this.client.SearchAsync<Recipe>(sr => sr
                 .Suggest(scd => scd
                     .Completion("recipe-name-completion", cs => cs
                         .Prefix(query)
@@ -145,9 +146,16 @@
                             .Fuzziness(Fuzziness.Auto))
                         .Field(r => r.Name))));
 
-            var matchingOptions = completionQuery.Suggest["recipe-name-completion"].Select(s => s.Options);
+            List<AutocompleteResult> suggestions = this.ExtractAutocompleteSuggestions(suggestionResponse);
 
+            return suggestions;
+        }
+
+        private List<AutocompleteResult> ExtractAutocompleteSuggestions(ISearchResponse<Recipe> response)
+        {
             List<AutocompleteResult> results = new List<AutocompleteResult>();
+            
+            var matchingOptions = response.Suggest["recipe-name-completion"].Select(s => s.Options);
 
             foreach (var option in matchingOptions)
             {
