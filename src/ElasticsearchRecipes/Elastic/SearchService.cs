@@ -25,10 +25,9 @@
         /// <returns></returns>
         public async Task<SearchResult<Recipe>> Search(string query, int page, int pageSize)
         {
-            // TODO: Raw query is not updated after the switch to QueryStringQuery!!
             #region RawQuery
             /* 
-            Passed query: "chopped onions" -"dried beans" eggs -pepper
+            Passed query: "chopped onions" eggs -tomatoes -"olive oil"
             {
               "from": 0,
               "size": 10,
@@ -37,34 +36,7 @@
                   "must": [
                     {
                       "query_string": {
-                        "query": "eggs" // A term that isn't marked with anything
-                      }
-                    },
-                    {
-                      "multi_match": {
-                        "type": "phrase",
-                        "query": "\"chopped onions\"", // A phrase that is marked with quotes
-                        "fields": [
-                          "name",
-                          "ingredients"
-                        ]
-                      }
-                    }
-                  ],
-                  "must_not": [
-                    {
-                      "query_string": {
-                        "query": "pepper" // A term that is marked with a '-' sign in front
-                      }
-                    },
-                    {
-                      "multi_match": {
-                        "type": "phrase",
-                        "query": "\"dried beans\"", // A phrase that is marked with a '-' sign in front
-                        "fields": [
-                          "name",
-                          "ingredients"
-                        ]
+                        "query": "\"chopped onions\" eggs -tomatoes -\"olive oil\""
                       }
                     }
                   ]
