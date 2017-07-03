@@ -3,8 +3,6 @@ The application is pretty simple, but extremely flexible in terms of searching d
 
 ![Application](http://i66.tinypic.com/4l4z7k)
 
-It supports a number of Elastic query types, among which *[query_string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html), [multi_match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html), [completion](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-completion.html), [more_like_this](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html)* and others.
-
 The user inputted string is proccessed in the following way:
 > * Exact phrases to look for are marked with ***quotes*** ("***an example phrase***").
 > * Each word/phrase that isn't marked in any way (**example**) ***will*** be present in the result set's ingredients.
