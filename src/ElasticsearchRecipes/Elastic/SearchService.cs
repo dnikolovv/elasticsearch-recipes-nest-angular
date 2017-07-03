@@ -4,8 +4,6 @@
     using Nest;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class SearchService
@@ -75,12 +73,12 @@
             }
             */
             #endregion
-
-            BoolQueryDescriptor<Recipe> queryDescriptor = this.BuildQueryDescriptor(query);
-
             var response = await this.client.SearchAsync<Recipe>(r => r
                     .Query(q => q
-                        .Bool(b => queryDescriptor)) 
+                        .Bool(bqd => bqd
+                            .Must(qsq => qsq
+                                .QueryString(qs => qs
+                                    .Query(query))))) 
                                         .From((page - 1) * pageSize)
                                         .Size(pageSize));
 
@@ -185,71 +183,6 @@
             }
 
             return results;
-        }
-
-        private BoolQueryDescriptor<Recipe> BuildQueryDescriptor(string query)
-        {
-            // Get the terms and phrases
-            string[] terms = ExtractTerms(query);
-            string[] phrases = ExtractPhrases(query);
-
-            List<QueryContainer> mustClauses = new List<QueryContainer>();
-            List<QueryContainer> mustNotClauses = new List<QueryContainer>();
-
-            // Traverse the query params and collect all must/must_not clauses
-            foreach (var param in terms.Concat(phrases))
-            {
-                QueryStringQuery queryToAdd = new QueryStringQuery();
-
-                if (param.StartsWith("-"))
-                {
-                    queryToAdd.Query = param.Substring(1, param.Length - 1);
-                    mustNotClauses.Add(queryToAdd);
-                }
-                else
-                {
-                    queryToAdd.Query = param;
-                    mustClauses.Add(queryToAdd);
-                }
-            }
-
-            // Create the actual query descriptor
-            BoolQueryDescriptor<Recipe> queryDescriptor = new BoolQueryDescriptor<Recipe>();
-            // Assign to it the clauses that we collected while processing the query
-            queryDescriptor.Must(mustClauses.ToArray());
-            queryDescriptor.MustNot(mustNotClauses.ToArray());
-            // Return it
-            return queryDescriptor;
-        }
-
-        private string[] ExtractPhrases(string query)
-        {
-            // If it's surrounded by " then " or surrounded by -" then "
-            Regex reg = new Regex("\\-\".*?\\\"|\".*?\\\"");
-
-            string[] phrases = reg.Matches(query)
-                .Cast<Match>()
-                .Select(m => m.Value)
-                .ToArray();
-
-            return phrases;
-        }
-
-        private string[] ExtractTerms(string query)
-        {
-            StringBuilder terms = new StringBuilder();
-
-            foreach (var word in query.Split())
-            {
-                // If it doesn't start/end with a quote or a minus quote (-")
-                // Both would indicate that it is marked as a phrase and not a term ("example phrase", -"example must_not phrase")
-                if (!word.StartsWith("\"") && !word.StartsWith("-\"") && !word.EndsWith("\""))
-                {
-                    terms.Append($" {word}");
-                }
-            }
-
-            return terms.ToString().Split();
         }
     }
 }
