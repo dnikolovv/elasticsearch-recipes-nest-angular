@@ -27,3 +27,10 @@ This spits out the result:
 
 [app_full]: http://i68.tinypic.com/230e2e.png
 [sample_query_result]: http://i66.tinypic.com/2s7xw7l.png
+
+[qsdocs]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+[qssearchsyntax]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
+[qsbooloperators]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_boolean_operators
+[qsboosting]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_boosting
+[qswildcards]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_wildcards
+[qsphrasematching]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
