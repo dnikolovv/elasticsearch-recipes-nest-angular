@@ -19,11 +19,10 @@
         /// <param name="fileName"></param>
         /// <param name="deleteIndexIfExists"></param>
         /// <returns></returns>
-        [HttpGet("file/{fileName}")]
-        public async Task<IActionResult> IndexDataFromFile(string fileName, bool deleteIndexIfExists)
+        [HttpGet]
+        public async Task<IActionResult> IndexDataFromFile([FromQuery]string fileName, string index, bool deleteIndexIfExists)
         {
-            // TODO: Handle exceptions
-            var response = await this.indexer.IndexRecipesFromFile(fileName, deleteIndexIfExists);
+            var response = await this.indexer.IndexRecipesFromFile(fileName, deleteIndexIfExists, index);
             return Ok(response);
         }
     }

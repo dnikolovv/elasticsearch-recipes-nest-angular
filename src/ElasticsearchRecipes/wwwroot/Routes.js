@@ -10,7 +10,7 @@
         $stateProvider
             .state('recipes', {
                 url: '/recipes',
-                templateUrl: '/Views/Home.html',
+                templateUrl: '/Views/Main.html',
                 controller: 'MainController',
                 controllerAs: 'model'
             });

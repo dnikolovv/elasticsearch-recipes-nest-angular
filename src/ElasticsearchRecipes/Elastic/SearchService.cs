@@ -16,8 +16,8 @@
         private readonly ElasticClient client;
 
         /// <summary>
-        /// Searches elastic for recipes matching the given query. If a word in the query is preceeded by a '-' sign, the results won't contain it. Supports wildcard queries.
-        /// Supports phrase matching when the phrase is surrounded by quotes.
+        /// Searches elastic for recipes matching the given query. If a word in the query is preceeded by a '-' sign, the results won't contain it. Supports everything QueryStringQuery does,
+        /// (wildcard queries, phrase matching, proximity matching, etc.) 
         /// </summary>
         /// <param name="query"></param>
         /// <param name="page"></param>
@@ -46,16 +46,15 @@
             */
             #endregion
 
-            var response = await this.client.SearchAsync<Recipe>(r => r
-                    .Query(q => q
+            var response = await this.client.SearchAsync<Recipe>(searchDescriptor => searchDescriptor
+                    .Query(queryContainerDescriptor => queryContainerDescriptor
                         .Bool(queryDescriptor => queryDescriptor
                             .Must(queryStringQuery => queryStringQuery
                                 .QueryString(queryString => queryString
                                     .Query(query))))) 
                                         .From((page - 1) * pageSize)
                                         .Size(pageSize));
-
-            // TODO: Should check if response is valid
+            
             return new SearchResult<Recipe>
             {
                 Total = response.Total,
@@ -99,8 +98,7 @@
                         .Fields(fd => fd.Fields(r => r.Ingredients))))
                         .From((page - 1) * pageSize)
                         .Size(pageSize));
-
-            // TODO: Should check if response is valid
+            
             return new SearchResult<Recipe>
             {
                 Total = response.Total,

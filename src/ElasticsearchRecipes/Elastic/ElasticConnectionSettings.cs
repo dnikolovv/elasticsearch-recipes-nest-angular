@@ -4,6 +4,6 @@
     {
         public string ClusterUrl { get; set; }
 
-        public string Index { get; set; }
+        public string DefaultIndex { get; set; }
     }
 }

@@ -2,7 +2,8 @@
     <a href="/"><h1>Elasticsearch Recipes</h1></a>
 
     <p>
-        Supported queries: wildcard (exampl*/exa?ple), must_not (-example), must (example), match_phrase ("example"), must_not match_phrase (-"example")
+        Supported queries: wildcard (exampl*/exa?ple), must_not (-example), must (example), match_phrase ("example"), must_not match_phrase (-"example"), proximity (examlpe~1), boosting (example^2)
+        and every other QueryStringQuery option.
     </p>
 
     <form class="form-inline" ng-submit="model.search()">
@@ -16,7 +17,7 @@
         </select>
 
         <input type="text" ng-model="model.query" placeholder="Start typing..." uib-typeahead="recipe.name as recipe.name for recipe in model.completionSuggestions($viewValue)" 
-               typeahead-loading="loadingRecipes" class="form-control" typeahead-on-select="model.goToSelectedItem($item)" typeahead-wait-ms="100">
+               typeahead-loading="loadingRecipes" class="form-control" typeahead-on-select="model.goToSelectedItem($item)" typeahead-wait-ms="150">
         <i ng-show="loadingRecipes" class="glyphicon glyphicon-refresh"></i>
         <button type="submit" class="btn btn-default">Go</button>
     </form>

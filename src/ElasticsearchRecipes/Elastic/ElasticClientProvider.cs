@@ -1,7 +1,6 @@
 ﻿namespace ElasticsearchRecipes.Elastic
 {
     using Microsoft.Extensions.Options;
-    using Models;
     using Nest;
 
     public class ElasticClientProvider
@@ -13,9 +12,9 @@
             
             connectionSettings.EnableDebugMode();
 
-            if (settings.Value.Index != null)
+            if (settings.Value.DefaultIndex != null)
             {
-                connectionSettings.DefaultIndex(settings.Value.Index);
+                connectionSettings.DefaultIndex(settings.Value.DefaultIndex);
             }
 
             this.Client = new ElasticClient(connectionSettings);

@@ -38,6 +38,7 @@
             } else {
                 // If an id is not specified, then the user has clicked his own query
                 // (the first suggestion, which is automatically selected)
+                // That means we should just excecute a search with the query that the user has entered
                 vm.search();
             }
         }

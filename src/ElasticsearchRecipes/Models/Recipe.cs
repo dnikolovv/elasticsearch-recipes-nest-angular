@@ -24,7 +24,7 @@
         public DateTime? DatePublished { get; set; }
 
         public string PrepTime { get; set; }
-        [Text(IndexOptions = IndexOptions.Freqs)]
+        [Text]
         public string Description { get; set; }
     }
 }

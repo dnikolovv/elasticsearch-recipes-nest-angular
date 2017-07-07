@@ -15,15 +15,20 @@
         {
             this.client = clientProvider.Client;
             this.contentRootPath = Path.Combine(env.ContentRootPath, "data");
-            this.index = settings.Value.Index;
+            this.defaultIndex = settings.Value.DefaultIndex;
         }
 
         private readonly ElasticClient client;
         private readonly string contentRootPath;
-        private readonly string index;
+        private readonly string defaultIndex;
 
-        public async Task<bool> IndexRecipesFromFile(string fileName, bool deleteIndexIfExists)
+        public async Task<bool> IndexRecipesFromFile(string fileName, bool deleteIndexIfExists, string index = null)
         {
+            if (index == null)
+            {
+                index = this.defaultIndex;
+            }
+
             using (FileStream fs = new FileStream(Path.Combine(contentRootPath, fileName), FileMode.Open))
             {
                 using (StreamReader reader = new StreamReader(fs))
@@ -37,22 +42,22 @@
                         });
 
                     // If the user specified to drop the index prior to indexing the documents
-                    if (this.client.IndexExists(this.index).Exists && deleteIndexIfExists)
+                    if (this.client.IndexExists(index).Exists && deleteIndexIfExists)
                     {
-                        await this.client.DeleteIndexAsync(this.index);
+                        await this.client.DeleteIndexAsync(index);
                     }
 
-                    if (!this.client.IndexExists(this.index).Exists)
+                    if (!this.client.IndexExists(index).Exists)
                     {
-                        var indexDescriptor = new CreateIndexDescriptor(this.index)
+                        var indexDescriptor = new CreateIndexDescriptor(index)
                                         .Mappings(mappings => mappings
                                             .Map<Recipe>(m => m.AutoMap()));
 
-                        await this.client.CreateIndexAsync(this.index, i => indexDescriptor);
+                        await this.client.CreateIndexAsync(index, i => indexDescriptor);
                     }
 
                     // Max out the result window so you can have pagination for >100 pages
-                    this.client.UpdateIndexSettings(this.index, ixs => ixs
+                    this.client.UpdateIndexSettings(index, ixs => ixs
                          .IndexSettings(s => s
                              .Setting("max_result_window", int.MaxValue)));
 

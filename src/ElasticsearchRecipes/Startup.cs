@@ -47,6 +47,7 @@
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+                // Always serve the static index.html file, which is the entry point for the Angular app
                 routes.MapRoute(
                     name: "default",
                     template: "{*url}",
