@@ -63,11 +63,11 @@
 
                     // Then index the documents
                     int batchSize = 10000; // magic
-                    int totalBatches = mappedCollection.Length / batchSize;
+                    int totalBatches = (int)Math.Ceiling((double)mappedCollection.Length / batchSize);;
 
                     for (int i = 0; i < totalBatches; i++)
                     {
-                        var response = await this.client.IndexManyAsync(mappedCollection.Skip(i * batchSize).Take(batchSize));
+                        var response = await this.client.IndexManyAsync(mappedCollection.Skip(i * batchSize).Take(batchSize), index);
                         System.Console.WriteLine($"Successfully indexed batch {i + 1}");
                         if (!response.IsValid)
                         {
