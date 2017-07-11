@@ -6,6 +6,7 @@
     using Nest;
     using Newtonsoft.Json;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -16,16 +17,16 @@
         {
             this.client = clientProvider.Client;
             this.contentRootPath = Path.Combine(env.ContentRootPath, "data");
-            this.defaultIndex = settings.Value.DefaultIndex.ToLower();
+            this.defaultIndex = settings.Value.DefaultIndex;
         }
 
         private readonly ElasticClient client;
         private readonly string contentRootPath;
         private readonly string defaultIndex;
 
-        public async Task<bool> IndexRecipesFromFile(string fileName, bool deleteIndexIfExists, string index = null)
+        public async Task<IndexResult> IndexRecipesFromFile(string fileName, bool deleteIndexIfExists, string index = null)
         {
-            ValidateIndexName(ref index);
+            SanitizeIndexName(ref index);
             Recipe[] mappedCollection = await ParseJsonFile(fileName);
             await DeleteIndexIfExists(index, deleteIndexIfExists);
             await CreateIndexIfItDoesntExist(index);
@@ -33,7 +34,7 @@
             return await IndexDocuments(mappedCollection, index);
         }
 
-        private void ValidateIndexName(ref string index)
+        private void SanitizeIndexName(ref string index)
         {
             // The index must be lowercase, this is a requirement from Elastic
             if (index == null)
@@ -46,23 +47,35 @@
             }
         }
 
-        private async Task<bool> IndexDocuments(Recipe[] mappedCollection, string index)
+        private async Task<IndexResult> IndexDocuments(Recipe[] mappedCollection, string index)
         {
             // Then index the documents
             int batchSize = 10000; // magic
-            int totalBatches = (int)Math.Ceiling((double)mappedCollection.Length / batchSize); ;
+            int totalBatches = (int)Math.Ceiling((double)mappedCollection.Length / batchSize);
 
             for (int i = 0; i < totalBatches; i++)
             {
                 var response = await this.client.IndexManyAsync(mappedCollection.Skip(i * batchSize).Take(batchSize), index);
-                System.Console.WriteLine($"Successfully indexed batch {i + 1}");
+
                 if (!response.IsValid)
                 {
-                    return false;
+                    return new IndexResult
+                    {
+                        IsValid = false,
+                        ErrorReason = response.ServerError?.Error?.Reason,
+                        Exception = response.OriginalException
+                    };
+                }
+                else
+                {
+                    Debug.WriteLine($"Successfully indexed batch {i + 1}");
                 }
             }
 
-            return true;
+            return new IndexResult
+            {
+                IsValid = true
+            };
         }
 
         private async Task ConfigurePagination(string index)
