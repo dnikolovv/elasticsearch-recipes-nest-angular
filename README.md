@@ -1,4 +1,4 @@
-# elasticsearch-recipes-nest-angular
+# The application
 The application is pretty simple, but extremely flexible in terms of searching data.
 
 ![Application][app_full]
@@ -25,8 +25,29 @@ This spits out the result:
 ![Result][sample_query_result]
 ...
 
+# How to run
+
+In order to run the application, you must [install and run][install_elastic_url] elastic then execute the following steps:
+
+1. Clone the repository.
+2. Open the project in Visual Studio and restore packages (Ctrl + Shift + K, Ctrl + Shift + R).
+3. Run the application (Ctrl + F5).
+
+In order to make use of the search functionality, you must have some recipes indexed in your elastic cluster.
+
+First, make sure that the cluster url in `appsettings.json` is correctly configured then:
+
+1. Download the [openrecipes dump][openrecipes_dump_download] json file.
+2. Extract the json file in `project-root\src\ElasticsearchRecipes\Data` (create the Data folder if it doesn't exist).
+3. While the application is running, make a get request to `appurl/api/index/file?fileName=openrecipes-big.json`.
+4. In a few minutes you should see a json response confirming that the indexation was valid.
+
+Everything should be set-up and you are free to play around.
+
 [app_full]: http://i68.tinypic.com/230e2e.png
 [sample_query_result]: http://i66.tinypic.com/2s7xw7l.png
+[install_elastic_url]: https://www.elastic.co/guide/en/elasticsearch/guide/current/running-elasticsearch.html
+[openrecipes_dump_download]: https://drive.google.com/open?id=0B-HzAYDi4IbYR0dOek1MWFVkRFU
 
 [qsdocs]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
 [qssearchsyntax]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
