@@ -49,7 +49,6 @@
 
         private async Task<IndexResult> IndexDocuments(Recipe[] mappedCollection, string index)
         {
-            // Then index the documents
             int batchSize = 10000; // magic
             int totalBatches = (int)Math.Ceiling((double)mappedCollection.Length / batchSize);
 
@@ -98,10 +97,9 @@
             }
         }
 
-        private async Task DeleteIndexIfExists(string index, bool shouldDelete)
+        private async Task DeleteIndexIfExists(string index, bool shouldDeleteIndex)
         {
-            // If the user specified to drop the index prior to indexing the documents
-            if (this.client.IndexExists(index).Exists && shouldDelete)
+            if (this.client.IndexExists(index).Exists && shouldDeleteIndex)
             {
                 await this.client.DeleteIndexAsync(index);
             }

@@ -9,11 +9,11 @@
     <form class="form-inline" ng-submit="model.search()">
         <span>Page size</span>
 
-        <select class="form-control" ng-model="model.pageSize" ng-change="model.search()">
-            <option>10</option>
-            <option>20</option>
-            <option>50</option>
-            <option>100</option>
+        <select class="form-control" 
+                ng-init="model.pageSize = model.pageSize || model.pageSizes[0]" 
+                ng-model="model.pageSize" 
+                ng-change="model.search()"
+                ng-options="size as size for size in model.pageSizes">
         </select>
 
         <input type="text" ng-model="model.query" placeholder="Start typing..." uib-typeahead="recipe.name as recipe.name for recipe in model.completionSuggestions($viewValue)" 

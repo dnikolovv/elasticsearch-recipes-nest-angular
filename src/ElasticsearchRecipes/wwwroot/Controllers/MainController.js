@@ -5,12 +5,19 @@
 
         vm.pageSize = $stateParams.pageSize;
 
+        vm.pageSizes = [
+            10,
+            20,
+            50,
+            100
+        ];
+
         vm.completionSuggestions = function (query) {
             if (query.length > 0) {
 
                 // In order to prevent uib-typeahead selecting the first item it encounters
                 // we are always going to return the query typed by the user first, and then,
-                // when the API responds with actual suggestions, we're just going to append them
+                // when the API responds with actual suggestions, we're going to append them
                 var suggestions = [{ name: query }];
 
                 return RecipeService.autocomplete(query).then(function (response) {
