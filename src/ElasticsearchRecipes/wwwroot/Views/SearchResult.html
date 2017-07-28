@@ -1,34 +1,40 @@
 ﻿<div>
-    <div>
-        Took: {{ model.searchData.elapsedMilliseconds }}ms, Page: {{ model.searchData.page }}, Results count: {{ model.searchData.total }}
+    <div ng-if="model.searchResult.isValid === false">
+        <div class="alert alert-danger" ng-bind="model.searchResult.errorMessage"></div>
     </div>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ingredients</th>
-                <th>Prep Time</th>
-                <th>Link</th>
-                <th>More like this</th>
-            </tr>
-        </thead>
-        <tr ng-repeat="recipe in model.searchData.results">
-            <td>{{ recipe.id }}</td>
-            <td>{{ recipe.name }}</td>
-            <td>{{ recipe.description }}</td>
-            <td>{{ recipe.ingredients }}</td>
-            <td>{{ recipe.prepTime }}</td>
-            <td>
-                <a href="{{ recipe.url }}">Go to recipe</a>
-            </td>
-            <td>
-                <a ui-sref="recipes.morelikethis({ id: recipe.id, pageSize: model.searchData.pageSize, recipe: recipe.name })">More like this</a>
-            </td>
-        </tr>
-    </table>
+    <div ng-if="model.searchResult.isValid">
+        <div>
+            Took: {{ model.searchResult.elapsedMilliseconds }}ms, Page: {{ model.searchResult.page }}, Results count: {{ model.searchResult.total }}
+        </div>
 
-    <ul uib-pagination total-items="model.searchData.total" items-per-page="model.searchData.pageSize" ng-model="model.searchData.page" max-size="10" boundary-link-numbers="true" role="menu" ng-change="model.switchPage()"></ul>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Ingredients</th>
+                    <th>Prep Time</th>
+                    <th>Link</th>
+                    <th>More like this</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="recipe in model.searchResult.results">
+                <td>{{ recipe.id }}</td>
+                <td>{{ recipe.name }}</td>
+                <td>{{ recipe.description }}</td>
+                <td>{{ recipe.ingredients }}</td>
+                <td>{{ recipe.prepTime }}</td>
+                <td>
+                    <a href="{{ recipe.url }}">Go to recipe</a>
+                </td>
+                <td>
+                    <a ui-sref="recipes.morelikethis({ id: recipe.id, pageSize: model.searchData.pageSize, recipe: recipe.name })">More like this</a>
+                </td>
+            </tr>
+        </table>
+
+        <ul uib-pagination total-items="model.searchData.total" items-per-page="model.searchData.pageSize" ng-model="model.searchResult.page" max-size="10" boundary-link-numbers="true" role="menu" ng-change="model.switchPage()"></ul>
+    </div>
 </div>

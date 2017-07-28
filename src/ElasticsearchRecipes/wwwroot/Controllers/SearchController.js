@@ -1,14 +1,14 @@
 ﻿(function () {
-    app.controller('SearchController', ['$state', '$stateParams', 'searchData', function ($state, $stateParams, searchData) {
+    app.controller('SearchController', ['$state', '$stateParams', 'searchResult', function ($state, $stateParams, searchResult) {
 
         var vm = this;
-        vm.searchData = searchData;
+        vm.searchResult = searchResult;
 
         vm.switchPage = function () {
 
             var params = {
                 query: $stateParams.query,
-                page: vm.searchData.page,
+                page: vm.searchResult.page,
                 pageSize: $stateParams.pageSize
             };
 

@@ -54,15 +54,8 @@
                                     .Query(query))))) 
                                         .From((page - 1) * pageSize)
                                         .Size(pageSize));
-            
-            return new SearchResult<Recipe>
-            {
-                Total = response.Total,
-                ElapsedMilliseconds = response.Took,
-                Page = page,
-                PageSize = pageSize,
-                Results = response.Documents
-            };
+
+            return MapResponseToSearchResult(response, page, pageSize);
         }
 
         public async Task<SearchResult<Recipe>> MoreLikeThis(string id, int page, int pageSize)
@@ -98,15 +91,8 @@
                         .Fields(fd => fd.Fields(r => r.Ingredients))))
                         .From((page - 1) * pageSize)
                         .Size(pageSize));
-            
-            return new SearchResult<Recipe>
-            {
-                Total = response.Total,
-                ElapsedMilliseconds = response.Took,
-                Page = page,
-                PageSize = pageSize,
-                Results = response.Documents
-            };
+
+            return MapResponseToSearchResult(response, page, pageSize);
         }
 
         public async Task<Recipe> GetById(string id)
@@ -161,6 +147,20 @@
             }
 
             return results;
+        }
+
+        private SearchResult<Recipe> MapResponseToSearchResult(ISearchResponse<Recipe> response, int page, int pageSize)
+        {
+            return new SearchResult<Recipe>
+            {
+                IsValid = response.IsValid,
+                ErrorMessage = response.ApiCall.OriginalException.Message,
+                Total = response.Total,
+                ElapsedMilliseconds = response.Took,
+                Page = page,
+                PageSize = pageSize,
+                Results = response.Documents
+            };
         }
     }
 }

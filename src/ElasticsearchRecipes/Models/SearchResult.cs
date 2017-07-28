@@ -4,6 +4,10 @@
 
     public class SearchResult<T>
     {
+        public bool IsValid { get; set; }
+
+        public string ErrorMessage { get; set; }
+
         public long Total { get; set; }
 
         public int Page { get; set; }

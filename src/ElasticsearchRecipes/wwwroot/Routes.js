@@ -19,7 +19,7 @@
                 .state('recipes.search', {
                     url: '/search/:query?page&pageSize',
                     resolve: {
-                        searchData: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
+                        searchResult: ['$q', 'RecipeService', '$stateParams', function ($q, RecipeService, $stateParams) {
 
                             var deferred = $q.defer();
 
