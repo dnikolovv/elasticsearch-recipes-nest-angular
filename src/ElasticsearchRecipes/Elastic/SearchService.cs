@@ -154,12 +154,12 @@
             return new SearchResult<Recipe>
             {
                 IsValid = response.IsValid,
-                ErrorMessage = response.ApiCall.OriginalException.Message,
+                ErrorMessage = response.ApiCall.OriginalException?.Message,
                 Total = response.Total,
                 ElapsedMilliseconds = response.Took,
                 Page = page,
                 PageSize = pageSize,
-                Results = response.Documents
+                Results = response?.Documents
             };
         }
     }
