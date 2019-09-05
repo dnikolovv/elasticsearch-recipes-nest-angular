@@ -1,3 +1,5 @@
+> This is the finished application if you were to follow my [4 part tutorial](https://devadventures.net/2018/04/16/connect-your-asp-net-core-application-to-elasticsearch-using-nest-5/) on Elasticsearch and NEST
+
 # The application
 The application is pretty simple, but extremely flexible in terms of searching data.
 
