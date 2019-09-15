@@ -46,8 +46,8 @@ First, make sure that the cluster url in `appsettings.json` is correctly configu
 
 Everything should be set-up and you are free to play around.
 
-[app_full]: http://i68.tinypic.com/230e2e.png
-[sample_query_result]: http://i66.tinypic.com/2s7xw7l.png
+[app_full]: ./app_full.png
+[sample_query_result]: ./example_query_result.png
 [install_elastic_url]: https://www.elastic.co/guide/en/elasticsearch/guide/current/running-elasticsearch.html
 [openrecipes_dump_download]: https://drive.google.com/open?id=0B-HzAYDi4IbYR0dOek1MWFVkRFU
 
